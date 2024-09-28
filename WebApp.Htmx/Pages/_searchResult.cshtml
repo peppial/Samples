@@ -1,0 +1,19 @@
+@model List<Movie>
+
+@foreach (var c in Model)
+{
+    <tr>
+        <td>@c.Title</td>
+        <td>@c.Year</td>
+        <td>@c.Type</td>
+        <td>
+            <button
+                hx-get="/Index?handler=ShowPoster&posterUrl=@c.Poster"
+                hx-target="#posterImage"
+                hx-swap="innerHTML">
+                View Poster
+            </button>
+
+        </td>
+    </tr>
+}
