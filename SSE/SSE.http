@@ -1,0 +1,31 @@
+@SSE_HostAddress = http://localhost:5250
+
+### Plain stream - Results.ServerSentEvents
+GET {{SSE_HostAddress}}/orders/realtime
+Accept: text/event-stream
+
+### Stream with ids - TypedResults.ServerSentEvents(SseItem<T>)
+GET {{SSE_HostAddress}}/orders/realtime/with-replays
+Accept: text/event-stream
+
+### Reconnect and replay everything after event 3
+GET {{SSE_HostAddress}}/orders/realtime/with-replays
+Accept: text/event-stream
+Last-Event-ID: 3
+
+### Only one customer's orders
+GET {{SSE_HostAddress}}/orders/realtime/mine?customerId=alice
+Accept: text/event-stream
+
+### Push an order into the stream by hand
+POST {{SSE_HostAddress}}/orders
+Content-Type: application/json
+
+{
+  "orderId": "manual-1",
+  "customerId": "alice",
+  "amount": 129.99,
+  "placedAt": "2026-08-29T10:00:00Z"
+}
+
+###
